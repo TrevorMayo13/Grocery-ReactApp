@@ -14,10 +14,10 @@ import './App.css';
 import logo from './logo.svg';
 
 //aws auth
-//import { withAuthenticator } from '@aws-amplify/ui-react'
+import { withAuthenticator } from '@aws-amplify/ui-react'
 //Databse
-import { listNotes } from './graphql/queries';
-import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
+import { listTodos } from './graphql/queries';
+import { createTodo as createNoteMutation, deleteTodo as deleteNoteMutation } from './graphql/mutations';
 import { API, Storage } from 'aws-amplify';
 
 
@@ -35,9 +35,9 @@ function App() {
 
   //fetch image if there is an image associated with a note
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
+    const apiData = await API.graphql({ query: listTodos });
     console.log(apiData);
-    const notesFromAPI = apiData.data.listNotes.items;
+    const notesFromAPI = apiData.data.listTodos.items;
     await Promise.all(notesFromAPI.map(async note => {
       if (note.image) {
         const image = await Storage.get(note.image);
@@ -45,7 +45,7 @@ function App() {
       }
       return note;
     }))
-    setNotes(apiData.data.listNotes.items);
+    setNotes(apiData.data.listTodos.items);
   }
 
   //Update the createNote function to add the image to the local image array if an image is associated with the note
@@ -120,5 +120,4 @@ function App() {
     </div>
   );
 }
-export default App;
-//export default withAuthenticator(App);
+export default withAuthenticator(App);

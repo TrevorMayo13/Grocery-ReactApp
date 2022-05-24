@@ -1,0 +1,14 @@
+{
+  "resourceName": "s35241840a",
+  "policyUUID": "5241840a",
+  "bucketName": "groceryreactappb422ab558ebe4d358e62521d84ccb2bd",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
