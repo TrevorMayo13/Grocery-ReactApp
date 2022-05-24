@@ -3,7 +3,7 @@ import React from 'react';
 export function Meat() {
   return (
     <div className="App">
-      <p>Meats</p>
+      <p>Meats Page</p>
     </div>
   );
 }
