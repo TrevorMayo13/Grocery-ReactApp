@@ -14,7 +14,7 @@ import './App.css';
 import logo from './logo.svg';
 
 //aws auth
-import { withAuthenticator } from '@aws-amplify/ui-react'
+//import { withAuthenticator } from '@aws-amplify/ui-react'
 //Databse
 import { listTodos } from './graphql/queries';
 import { createTodo as createNoteMutation, deleteTodo as deleteNoteMutation } from './graphql/mutations';
@@ -120,4 +120,5 @@ function App() {
     </div>
   );
 }
-export default withAuthenticator(App);
+export default App;
+//export default withAuthenticator(App);
