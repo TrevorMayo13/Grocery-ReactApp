@@ -13,8 +13,8 @@ import React from 'react';
 import './App.css';
 import logo from './logo.svg';
 
-//aws
-import { withAuthenticator } from '@aws-amplify/ui-react'
+//aws auth
+//import { withAuthenticator } from '@aws-amplify/ui-react'
 //Databse
 import { listNotes } from './graphql/queries';
 import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
@@ -90,19 +90,6 @@ function App() {
         type="file"
         onChange={onChange}
       />
-      {
-        //When mapping over the notes array, render an image if it exists:
-        notes.map(note => (
-          <div key={note.id || note.name}>
-            <h2>{note.name}</h2>
-            <p>{note.description}</p>
-            <button onClick={() => deleteNote(note)}>Delete note</button>
-            {
-              note.image && <img src={note.image} style={{ width: 400 }} />
-            }
-          </div>
-        ))
-      }
       <input
         onChange={e => setFormData({ ...formData, 'name': e.target.value })}
         placeholder="Note name"
@@ -116,11 +103,15 @@ function App() {
       <button onClick={createNote}>Create Note</button>
       <div style={{ marginBottom: 30 }}>
         {
+          //When mapping over the notes array, render an image if it exists:
           notes.map(note => (
             <div key={note.id || note.name}>
               <h2>{note.name}</h2>
               <p>{note.description}</p>
               <button onClick={() => deleteNote(note)}>Delete note</button>
+              {
+                note.image && <img src={note.image} style={{ width: 400 }} />
+              }
             </div>
           ))
         }
@@ -128,5 +119,5 @@ function App() {
     </div>
   );
 }
-
-export default withAuthenticator(App);
+export default App;
+//export default withAuthenticator(App);
