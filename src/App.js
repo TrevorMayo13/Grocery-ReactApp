@@ -13,6 +13,9 @@ import React from 'react';
 import './App.css';
 import logo from './logo.svg';
 
+//aws
+import { withAuthenticator } from '@aws-amplify/ui-react'
+
 function App() {
   const view = useSelector(getView);
 
@@ -30,4 +33,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
