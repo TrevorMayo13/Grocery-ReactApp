@@ -1,0 +1,14 @@
+{
+  "resourceName": "ImageStorage",
+  "policyUUID": "a511a141",
+  "bucketName": "groceryreactapp99968a2227934c92be86c9a6814cc53d",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
