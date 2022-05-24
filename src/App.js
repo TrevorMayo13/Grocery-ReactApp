@@ -36,6 +36,7 @@ function App() {
   //fetch image if there is an image associated with a note
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listNotes });
+    console.log(apiData);
     const notesFromAPI = apiData.data.listNotes.items;
     await Promise.all(notesFromAPI.map(async note => {
       if (note.image) {
