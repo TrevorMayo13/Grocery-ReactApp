@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import { setView } from '../../app/DataSet';
+import { setView, setSearch, getSearch, getView } from '../../app/DataSet';
 export function NavBar() {
+
+    const onFormSubmit = e => {
+        e.preventDefault()
+        const formData = new FormData(e.target),
+            formDataObj = Object.fromEntries(formData.entries())
+        console.log(formDataObj.myInput)
+        dispatch(setSearch(formDataObj.myInput));
+        dispatch(setView('allitems'));
+    }
+
     const dispatch = useDispatch();
+
 
     return (
         <Navbar bg="light" expand="lg">
@@ -25,14 +36,15 @@ export function NavBar() {
                         <Nav.Link onClick={() => dispatch(setView('allitems'))}>All Items</Nav.Link>
                         <Nav.Link onClick={() => dispatch(setView('additem'))}>Add Items</Nav.Link>
                     </Nav>
-                    <Form className="d-flex">
+                    <Form className="d-flex" onSubmit={onFormSubmit}>
                         <FormControl
                             type="search"
+                            name="myInput"
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-success" type="submit">Search</Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>
