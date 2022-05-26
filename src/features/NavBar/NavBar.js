@@ -23,6 +23,7 @@ export function NavBar() {
                             <NavDropdown.Item onClick={() => dispatch(setView('produce'))}>Produce</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link onClick={() => dispatch(setView('allitems'))}>All Items</Nav.Link>
+                        <Nav.Link onClick={() => dispatch(setView('additem'))}>Add Items</Nav.Link>
                     </Nav>
                     <Form className="d-flex">
                         <FormControl

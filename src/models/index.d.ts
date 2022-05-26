@@ -17,6 +17,8 @@ export declare class Item {
   readonly name?: string | null;
   readonly description?: string | null;
   readonly image?: string | null;
+  readonly price?: number | null;
+  readonly category?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Item, ItemMetaData>);

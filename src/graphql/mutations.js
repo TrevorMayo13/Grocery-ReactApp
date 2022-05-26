@@ -11,6 +11,8 @@ export const createItem = /* GraphQL */ `
       name
       description
       image
+      price
+      category
       createdAt
       updatedAt
     }
@@ -26,6 +28,8 @@ export const updateItem = /* GraphQL */ `
       name
       description
       image
+      price
+      category
       createdAt
       updatedAt
     }
@@ -41,11 +45,14 @@ export const deleteItem = /* GraphQL */ `
       name
       description
       image
+      price
+      category
       createdAt
       updatedAt
     }
   }
 `;
+
 export const createTodo = /* GraphQL */ `
   mutation CreateTodo(
     $input: CreateTodoInput!
