@@ -1,0 +1,18 @@
+.itemName {
+    position: absolute;
+    top: 0;
+}
+
+.itemDescription {
+    position: absolute;
+    bottom: 0;
+}
+
+.itemPrice {
+    position: absolute;
+    bottom: 0;
+}
+
+.container{
+    position: relative;
+}

@@ -8,6 +8,7 @@ import React from 'react';
 //Databse
 //amplify pull, amplify api update, amplify push to update backend
 import { listItems } from '../../graphql/queries';
+import jsonObject from '../../groceryitems.json';
 import { createItem as createItemMutation, deleteItem as deleteItemMutation } from '../../graphql/mutations'
 import { API, Storage, Auth, graphqlOperation } from 'aws-amplify';
 
@@ -76,18 +77,6 @@ function AddItemPage({ signOut, user }) {
         fetchItems();
     }
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
-
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
@@ -145,6 +134,53 @@ function AddItemPage({ signOut, user }) {
         fetchItems();
     };
 
+    //Fills Database with grocery items
+    async function createMultiple(tempArray) {
+        let mutationString = "";
+        for (let i in tempArray) {
+            console.log(tempArray[i]);
+            console.log(`${JSON.stringify(tempArray[i])}`);
+            mutationString += `mutation${i}: createItem(input: ${JSON.stringify(tempArray[i])}) {
+            id
+              name
+              description
+              image
+              price
+              category
+            }
+            `;
+        }
+
+        console.log(mutationString);
+        const unquoted = mutationString.replace(/"([^"]+)":/g, '$1:');
+        console.log(unquoted);
+
+        await API.graphql(
+            graphqlOperation(`
+            mutation batchMutation {
+              ${ unquoted }
+        }
+        `)
+        );
+        fetchItems();
+    }
+
+
+    function importGroceryItems() {
+        console.log(jsonObject);
+        let tempArray = [];
+        for (let key in jsonObject) {
+            if (jsonObject[key]) {
+                delete jsonObject[key].width;
+                delete jsonObject[key].height;
+                delete jsonObject[key].rating;
+                tempArray.push(jsonObject[key]);
+            }
+        }
+        console.log(tempArray);
+        createMultiple(tempArray);
+    }
+
     return (
         <div>
             <h1>Add Item Page</h1>
@@ -159,21 +195,25 @@ function AddItemPage({ signOut, user }) {
                     <Button size="small" onClick={handleDeleteRow}>
                         {isMultiple}
                     </Button>
+                    <Button size="small" onClick={importGroceryItems}>
+                        Import JSON Test Objects
+                    </Button>
                 </Stack>
-                <Box sx={{ height: 400, bgcolor: 'background.paper' }}>
+                <Box sx={{ height: 361, bgcolor: 'background.paper' }}>
                     <DataGrid
                         rows={items}
                         columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
+                        rowHeight={25} 
                         checkboxSelection
                         disableSelectionOnClick
                         onSelectionModelChange={(newSelectionModel) => {
-                            if (newSelectionModel.length === 1){
+                            if (newSelectionModel.length === 1) {
                                 setIsMultiple('Delete Item');
-                            }else if (newSelectionModel.length === 0){
+                            } else if (newSelectionModel.length === 0) {
                                 setIsMultiple('Select Items');
-                            }else{
+                            } else {
                                 setIsMultiple('Delete All Selected');
                             }
                             setSelectionModel(newSelectionModel);
