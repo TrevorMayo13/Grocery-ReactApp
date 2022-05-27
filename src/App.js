@@ -3,6 +3,7 @@ import { NavBar } from './features/NavBar/NavBar';
 import { Items } from './features/Items/Items';
 import { About } from './features/About/About';
 import { Meat } from './features/Meat/Meat';
+import Home from './features/Home/Home';
 import { Produce } from './features/Produce/Produce';
 import { getView } from './app/DataSet';
 
@@ -30,7 +31,7 @@ function App() {
     <div className="App">
       <NavBar />
       {
-        view === 'home' ? <div><img src={logo} className="App-logo" alt="logo" /> <Counter /></div> :
+        view === 'home' ? <Home /> :
           view === 'allitems' ? <Items /> :
             view === 'about' ? <About /> :
               view === 'meat' ? <Meat /> :

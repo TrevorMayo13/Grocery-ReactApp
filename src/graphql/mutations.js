@@ -52,7 +52,6 @@ export const deleteItem = /* GraphQL */ `
     }
   }
 `;
-
 export const createTodo = /* GraphQL */ `
   mutation CreateTodo(
     $input: CreateTodoInput!
