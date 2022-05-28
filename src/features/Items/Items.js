@@ -1,5 +1,5 @@
 
-import { createStoreHook, useSelector, useStore } from 'react-redux';
+import { createStoreHook, useSelector, useStore, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import React from 'react';
 
@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-import {getSearch} from '../../app/DataSet'
+import { getSearch, getCart, setCart} from '../../app/DataSet'
 
 const style = {
   position: 'absolute',
@@ -33,11 +33,17 @@ const style = {
 };
 
 export function Items() {
+  //Redux
+  const search = useSelector(getSearch);
+  const globalCart = useSelector(getCart);
+  const dispatch = useDispatch();
+
+  //Local State
   const initialFormState = { name: '', description: '' }
   const [formData, setFormData] = useState(initialFormState);
   const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const searchInput = useSelector(getSearch);
+  const [localCart, setLocalCart] = useState(globalCart);
+  //  const [search, setSearch] = useState(searchInput);
 
   //Handling Modal
   const [open, setOpen] = React.useState(false);
@@ -47,20 +53,11 @@ export function Items() {
 
   useEffect(() => {
     fetchItems();
-    filterItems();
   }, []);
-
-  useEffect(() => {
-    filterItems();
-  }, [items]);
-
-  useEffect(() => {
-    filterItems();
-  }, [searchInput]);
 
   async function fetchItems() {
     const apiData = await API.graphql({ query: listItems });
-    console.log(apiData);
+    console.log('All items: ' + apiData);
     const itemsFromAPI = apiData.data.listItems.items;
     await Promise.all(itemsFromAPI.map(async item => {
       if (item.image) {
@@ -70,16 +67,6 @@ export function Items() {
       return item;
     }))
     setItems(apiData.data.listItems.items);
-  }
-
-  //handle image upload
-  async function onChange(e) {
-    if (!e.target.files[0]) return
-    const file = e.target.files[0];
-    setFormData({ ...formData, image: file.name });
-    await Storage.put(file.name, file);
-    //fetchNotes();
-    fetchItems();
   }
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -96,22 +83,33 @@ export function Items() {
     backgroundColor: "#fff"
   };
 
-
-  const handleAddToCart = (e, item) => {
-    handleOpen();
-    setModalItem(item);
+  const pushCart = () => {
+    dispatch(setCart(localCart));
+    console.log('cart updated, and dispatched');
   }
 
-  const filterItems = () => {
-    const tempArray = items.filter(item => item.name.includes(searchInput));
-    setFilteredItems(tempArray);
+  useEffect(() => {
+    pushCart();
+  }, [localCart]);
+
+  useEffect(() => {
+    console.log(`for some fucking reason, search changed to: "${search}"`)
+  }, [search]);
+
+  const handleAddToCart = (item) => {
+    // handleOpen();
+    // setModalItem(item);
+
+    //Add item to Cart State
+    setLocalCart(globalCart);
+    setLocalCart(prevCart => [...prevCart, item]);
   }
 
   return (
     <div className="container">
       <h1>Item Page</h1>
       <div className="grid-container">
-        {filteredItems.length > 0 ? filteredItems.map((item) => (
+        {items.filter(item => item.name.includes(search)).length > 0 ? items.filter(item => item.name.includes(search)).map((item) => (
           <div className="grid-card">
             <img src="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg" className="item-img"></img>
             <h5 className='item-name'>
@@ -120,7 +118,7 @@ export function Items() {
             <p className="item-price">
               {`$${item.price}`}
             </p>
-            <Button onClick={(e) => handleAddToCart(e, item)} variant="contained" color="success">Add to Cart</Button>
+            <Button onClick={() => handleAddToCart(item)} variant="contained" color="success">Add to Cart</Button>
           </div>
         )) : <div className="no-results"><h4>No results</h4></div>}
       </div>

@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import { setView, setSearch, getSearch, getView } from '../../app/DataSet';
+import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { setView, setSearch, getSearch, getView, getCart as getGlobalCart, setCart } from '../../app/DataSet';
+import './NavBar.css'
+import cartPic from '../../cartPic.jpg'
+import trashPic from '../../trash.png'
+
 export function NavBar() {
+    const dispatch = useDispatch();
 
     const onFormSubmit = e => {
         e.preventDefault()
         const formData = new FormData(e.target),
             formDataObj = Object.fromEntries(formData.entries())
-        console.log(formDataObj.myInput)
         dispatch(setSearch(formDataObj.myInput));
         dispatch(setView('allitems'));
     }
 
-    const dispatch = useDispatch();
+    const cart = useSelector(getGlobalCart);
 
+    const deleteItem = (index) => {
+        const tempCart = [...cart];
+        tempCart.splice(index, 1)
+        dispatch(setCart(tempCart));
+    }
 
     return (
         <Navbar bg="light" expand="lg">
@@ -45,6 +54,24 @@ export function NavBar() {
                             aria-label="Search"
                         />
                         <Button variant="outline-success" type="submit">Search</Button>
+                        <Dropdown className="d-inline mx-2" autoClose="outside">
+                            <Dropdown.Toggle variant="outline-success">
+                                {`Cart ${cart.length}`}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu align="end">
+                                {cart.map((item, index) => (
+                                    <Dropdown.Item href="#">
+                                        <div className="menuItem">
+                                            {`${item.name} $${item.price}`}
+                                            <img className="cartPic" src={trashPic} onClick={() => deleteItem(index)}></img>
+                                        </div>
+                                    </Dropdown.Item>
+                                ))}
+                                {/* <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                                <Dropdown.Item href="#">Menu Item</Dropdown.Item> */}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Form>
                 </Navbar.Collapse>
             </Container>
