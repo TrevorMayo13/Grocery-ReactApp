@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-import { getSearch, getCart, setCart} from '../../app/DataSet'
+import { getSearch, getCart, setCart, setSearch} from '../../app/DataSet'
 
 const style = {
   position: 'absolute',
@@ -51,7 +51,9 @@ export function Items() {
   const handleClose = () => setOpen(false);
   const [modalItem, setModalItem] = useState({});
 
+  //On Mount, reset search conditions, fetch items from api
   useEffect(() => {
+    dispatch(setSearch(''));
     fetchItems();
   }, []);
 

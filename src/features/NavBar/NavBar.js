@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
 import { setView, setSearch, getSearch, getView, getCart as getGlobalCart, setCart } from '../../app/DataSet';
 import './NavBar.css'
-import cartPic from '../../cartPic.jpg'
+import cartPic from '../../cart.svg'
 import trashPic from '../../trash.png'
 
 export function NavBar() {
+    const [localSearch, setLocalSearch] = useState('');
+
     const dispatch = useDispatch();
 
     const onFormSubmit = e => {
@@ -25,56 +27,58 @@ export function NavBar() {
         dispatch(setCart(tempCart));
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        dispatch(setSearch(localSearch));
+        dispatch(setView('allitems'));
+    }
+
     return (
-        <Navbar bg="light" expand="lg">
-            <Container fluid>
-                <Navbar.Brand>Grocery App</Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                    <Nav
-                        className="me-auto my-2 my-lg-0"
-                        style={{ maxHeight: '100px' }}
-                        navbarScroll
-                    >
-                        <Nav.Link onClick={() => dispatch(setView('home'))}>Home</Nav.Link>
-                        <Nav.Link onClick={() => dispatch(setView('about'))}>About</Nav.Link>
-                        <NavDropdown title="Categories" id="navbarScrollingDropdown">
+        <div className="navbar">
+            <div className="logo-and-links">
+                <h4 className="logo">Grocery App</h4>
+                <div className="links">
+                    <a onClick={() => dispatch(setView('home'))}>Home</a>
+                    <a onClick={() => dispatch(setView('about'))}>About</a>
+                    <a>Categories</a>
+                    {/* <NavDropdown title="Categories" id="navbarScrollingDropdown">
                             <NavDropdown.Item onClick={() => dispatch(setView('meat'))}>Meat</NavDropdown.Item>
                             <NavDropdown.Item onClick={() => dispatch(setView('produce'))}>Produce</NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link onClick={() => dispatch(setView('allitems'))}>All Items</Nav.Link>
-                        <Nav.Link onClick={() => dispatch(setView('additem'))}>Add Items</Nav.Link>
-                    </Nav>
-                    <Form className="d-flex" onSubmit={onFormSubmit}>
-                        <FormControl
-                            type="search"
-                            name="myInput"
-                            placeholder="Search"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button variant="outline-success" type="submit">Search</Button>
-                        <Dropdown className="d-inline mx-2" autoClose="outside">
-                            <Dropdown.Toggle variant="outline-success">
-                                {`Cart ${cart.length}`}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu align="end">
-                                {cart.map((item, index) => (
-                                    <Dropdown.Item href="#">
-                                        <div className="menuItem">
-                                            {`${item.name} $${item.price}`}
-                                            <img className="cartPic" src={trashPic} onClick={() => deleteItem(index)}></img>
-                                        </div>
-                                    </Dropdown.Item>
-                                ))}
-                                {/* <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                        </NavDropdown> */}
+                    <a onClick={() => dispatch(setView('allitems'))}>All Items</a>
+                    <a onClick={() => dispatch(setView('additem'))}>Add Items</a>
+                </div>
+            </div>
+            <div className="search-cart">
+                <form onSubmit={handleSubmit} className="search-form">
+                    <input
+                        id="search"
+                        type="text"
+                        value={localSearch}
+                        onChange={(e) => setLocalSearch(e.target.value)}
+                        placeholder="Search"></input>
+                    <button className="search-button" type="submit">Search</button>
+                </form>
+                <Dropdown className="d-inline mx-2" autoClose="outside">
+                    <Dropdown.Toggle variant="outline-success">
+                        <img className="cart-picture" src={cartPic}></img>
+                        {cart.length}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu align="end">
+                        {cart.map((item, index) => (
+                            <Dropdown.Item href="#">
+                                <div className="menu-item">
+                                    {`${item.name} $${item.price}`}
+                                    <img className="cartPic" src={trashPic} onClick={() => deleteItem(index)}></img>
+                                </div>
+                            </Dropdown.Item>
+                        ))}
+                        {/* <Dropdown.Item href="#">Menu Item</Dropdown.Item>
                                 <Dropdown.Item href="#">Menu Item</Dropdown.Item>
                                 <Dropdown.Item href="#">Menu Item</Dropdown.Item> */}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Form>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+        </div>
     );
 }
