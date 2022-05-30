@@ -1,5 +1,7 @@
 import React from 'react';
-import fruit from '../../fruit-pic.jpg';
+import { useSelector, useDispatch } from 'react-redux';
+import { getView } from '../../app/DataSet';
+import { setView } from '../../app/DataSet';
 import './Home.css';
 import cheesecake from './cheesecake.jpeg';
 import wagyu from './wagyu.jpg';
@@ -15,6 +17,8 @@ function Home() {
     { id: 3, name: 'Watermelon', description: 'Sweet, organic watermelon sourced directly from neighboring farms.', image: watermelon, price: '8.99' }
   ];
 
+  const dispatch = useDispatch();
+
   return (
     <div className="home-wrapper">
       {/* <img className="fruit-pic" src={fruit}>/ */}
@@ -22,7 +26,7 @@ function Home() {
         <div className="pop-out">
           <h2>Celebrate Memorial Day with our new Deals!</h2>
           <p>Tons of tasty treats for your family and friends!</p>
-          <button>Shop Now</button>
+          <button onClick={() => dispatch(setView('allitems'))}>Shop Now</button>
         </div>
       </div>
       <div className="div2">

@@ -39,8 +39,8 @@ export function NavBar() {
                 <h4 className="logo">Grocery App</h4>
                 <div className="links">
                     <a onClick={() => dispatch(setView('home'))}>Home</a>
-                    <a onClick={() => dispatch(setView('about'))}>About</a>
-                    <a>Categories</a>
+                    {/* <a onClick={() => dispatch(setView('about'))}>About</a> */}
+                    {/* <a>Categories</a> */}
                     {/* <NavDropdown title="Categories" id="navbarScrollingDropdown">
                             <NavDropdown.Item onClick={() => dispatch(setView('meat'))}>Meat</NavDropdown.Item>
                             <NavDropdown.Item onClick={() => dispatch(setView('produce'))}>Produce</NavDropdown.Item>
