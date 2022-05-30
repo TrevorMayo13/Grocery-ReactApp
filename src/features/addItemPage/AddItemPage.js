@@ -2,7 +2,7 @@
 import { createStoreHook, useSelector, useStore } from 'react-redux';
 import { useState, useEffect } from 'react';
 import React from 'react';
-
+import './AddItemPage.css';
 //aws auth
 //import { withAuthenticator } from '@aws-amplify/ui-react'
 //Databse
@@ -182,7 +182,7 @@ function AddItemPage({ signOut, user }) {
     }
 
     return (
-        <div>
+        <div className="page-container">
             <h1>Add Item Page</h1>
             <div style={{ height: 100 }}></div>
             <div style={{ height: 400, width: '100%' }}>

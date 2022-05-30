@@ -1,0 +1,88 @@
+.home-wrapper{
+    max-width: 1284px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+}
+
+.fruit-pic{
+    position: relative;
+    width:100%;
+    height: 400px;
+    background-size: cover;
+    background-image: url('../../fruit-pic.jpg');
+    margin-bottom: 20px;
+}
+
+.pop-out{
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    height: 200px;
+    width: 400px;
+    top: 100px;
+    left: 100px;
+    background-color: white;
+    opacity: .8;
+}
+
+.pop-out > button {
+    max-width: 100px;
+    color: #198754;
+    border-color: #198754;
+    border: 1px solid;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.pop-out > button:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.div2{
+    padding: 2em;
+    width: 100%;
+    height: 600px;
+    background-color: white;
+}
+
+.featured-grid-container{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    padding: 2em;
+}
+
+.featured-card{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.featured-card > img{
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+}
+
+.div2 > h1{
+    font-family: Didot, serif;
+}

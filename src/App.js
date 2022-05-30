@@ -6,6 +6,7 @@ import { Meat } from './features/Meat/Meat';
 import Home from './features/Home/Home';
 import { Produce } from './features/Produce/Produce';
 import { getView } from './app/DataSet';
+import {Footer} from './features/Footer/Footer';
 
 import { createStoreHook, useSelector, useStore } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -38,6 +39,7 @@ function App() {
                 view === 'produce' ? <Produce /> :
                   view === 'additem' ? <AddItemPage /> : null
       }
+      <Footer />
     </div>
   );
 }

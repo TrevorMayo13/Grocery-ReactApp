@@ -11,7 +11,7 @@ menuItem {
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #F8F9FA;
+    background-color: #4B4542;
     padding: 10px;
     align-items: center;
 }
@@ -21,7 +21,7 @@ menuItem {
     justify-content: space-between;
     gap: 1em;
     align-items: center;
-    color: rgba(0, 0, 0, .55);
+    color: #F8F9FA;
 }
 
 .links {
@@ -36,7 +36,7 @@ menuItem {
     transition: color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.links>*:hover {
+.links>a:hover {
     cursor: pointer;
     color: rgba(0, 0, 0, 1)
 }
@@ -67,7 +67,7 @@ menuItem {
 }
 
 .search-button {
-    color: #198754;
+    color: #F8F9FA;
     border-color: #198754;
     border: 1px solid;
     font-weight: 400;
